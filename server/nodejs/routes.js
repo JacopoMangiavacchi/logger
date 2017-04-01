@@ -26,6 +26,7 @@ router.route('/log')
         var error = log.validateSync();
         if (error == null) {
             // Save log and check for errors
+            console.log("saving ...")
             log.save(function(err) {
                 if (err) {
                     console.log('Error saving: ', err);
