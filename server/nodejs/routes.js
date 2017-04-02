@@ -42,33 +42,38 @@ router.route('/log/:template')
                 }
                 else {
                     console.log('Error validating: ', error);
-                    res.send(error);
+                    saveGenericLog(req.params.template, req.body, res)
                 }
                 break;
         
             default:
                 console.log("saving generic ...")
-
-                var GenericSchema = require('./models/generic');
-                var generic = new GenericSchema();
-                generic.body = req.body
-
-                generic.save(function(err) {
-                    if (err) {
-                        console.log('Error saving: ', err);
-                        res.send(err);
-                    }
-                    else {
-                        console.log('Saved');
-                        res.json({ message: 'Warning: Generic Log created successfully!' });
-                    }
-                });
+                saveGenericLog(req.params.template, req.body, res)
                 break;
         }
     });
 
 module.exports = router;
- 
+
+function saveGenericLog(template, body, res) {
+    var GenericSchema = require('./models/generic');
+    var generic = new GenericSchema();
+    generic.template template;
+    generic.body = body;
+
+    generic.save(function(err) {
+        if (err) {
+            console.log('Error saving: ', err);
+            res.send(err);
+        }
+        else {
+            console.log('Saved');
+            res.json({ message: 'Warning: Generic Log created successfully!' });
+        }
+    });
+}
+
+
 function dateDisplayed(timestamp) {
     var date = new Date(timestamp);
     return (date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
