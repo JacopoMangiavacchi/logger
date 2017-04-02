@@ -1,15 +1,10 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
  
-var logSchema  = new Schema({
-    type: {
+var simpleSchema  = new Schema({
+    simpleValue: {
         type: String,
-		enum: ['simple', 'complex'],
-        //default: 'simple',
         required: true
-    },
-    context: {
-        type: Object
     },
     payload: {
         type: Object,
@@ -17,4 +12,4 @@ var logSchema  = new Schema({
     }
 });
  
-module.exports = mongoose.model('Log', logSchema);
+module.exports = mongoose.model('Simple', simpleSchema);
