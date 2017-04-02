@@ -44,6 +44,6 @@ conn.on('disconnected', function () {
     mongoose.connect(mongodbUri);
 });
 
-var mongodbUri = 'mongodb://jacopo:XXXX:35790/mongokywix?authSource=mongokywix&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000';
+var mongodbUri = 'mongodb://XXXX:35790/mongokywix?authSource=mongokywix&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000';
 mongoose.connect(mongodbUri);
  

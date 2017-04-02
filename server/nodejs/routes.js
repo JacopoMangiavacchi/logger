@@ -26,15 +26,42 @@ router.route('/log/:template')
         console.log(req.params.template)
         console.log(req.body) 
 
-        // Save log and check for errors
-        switch (req.params.template) {
-            case 'simple':
-                trySaveSimpleLog(req.params.template, req.body, res);
-                break;
-        
-            default:
+        try {
+            var Schema = require(`./models/${req.params.template}`);
+            var jsonschema = jsonSchema(Schema);
+            var schemaobject = new Schema();
+
+            for (var key in jsonschema.properties) {
+                if (req.body.hasOwnProperty(key)) {
+                    schemaobject[key] = req.body[key];
+                }
+            }
+
+            console.log("validating simple ...")
+
+            var error = schemaobject.validateSync();
+            if (error == null) {
+                console.log("saving simple ...")
+                schemaobject.save(function(err) {
+                    if (err) {
+                        console.log('Error saving: ', err);
+                        res.send(err);
+                    }
+                    else {
+                        console.log('Saved');
+                        res.json({ message: 'Log created successfully!' });
+                    }
+                });
+            }
+            else {
+                console.log('Error validating: ', error);
                 saveGenericLog(req.params.template, req.body, res)
-                break;
+            }
+
+        } catch (error) {
+            console.log("Error catched")
+            //console.log(error)
+            saveGenericLog(req.params.template, req.body, res)
         }
     });
 
@@ -60,33 +87,6 @@ function saveGenericLog(template, body, res) {
     });
 }
 
-function trySaveSimpleLog(template, body, res) {
-    console.log("validating simple ...")
-
-    var SimpleSchema = require('./models/simple');
-    var simple = new SimpleSchema();
-    simple.simpleValue = body.simpleValue
-    simple.payload = body.payload;
-
-    var error = simple.validateSync();
-    if (error == null) {
-        console.log("saving simple ...")
-        simple.save(function(err) {
-            if (err) {
-                console.log('Error saving: ', err);
-                res.send(err);
-            }
-            else {
-                console.log('Saved');
-                res.json({ message: 'Log created successfully!' });
-            }
-        });
-    }
-    else {
-        console.log('Error validating: ', error);
-        saveGenericLog(template, body, res)
-    }
-}
 
 function dateDisplayed(timestamp) {
     var date = new Date(timestamp);
