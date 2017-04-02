@@ -1,5 +1,7 @@
 var express = require('express');
- 
+var mongoose = require('mongoose');
+var jsonSchema = require('mongoose-jsonschema').modelToJSONSchema;
+
 // Get the router
 var router = express.Router();
  
@@ -12,6 +14,14 @@ router.use(function timeLog(req, res, next) {
 
 // Create a log (using POST at http://localhost:8080/log/simple)
 router.route('/log/:template')
+    .get(function(req, res) {
+        try {
+            var schema = require(`./models/${req.params.template}`);
+            res.json(jsonSchema(schema));
+        } catch (error) {
+            res.json({ message: 'No template found' });
+        }
+    })
     .post(function(req, res) {
         console.log(req.params.template)
         console.log(req.body) 

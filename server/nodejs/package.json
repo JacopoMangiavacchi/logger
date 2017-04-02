@@ -12,6 +12,7 @@
     "body-parser": "~1.13.3",
     "connect-timeout": "^1.8.0",
     "express": "^4.15.2",
-    "mongoose": "~4.1.0"
+    "mongoose": "~4.1.0",
+    "mongoose-jsonschema": "^0.3.0"
   }
 }

@@ -28,9 +28,6 @@ app.use('/', routes);
  
 var conn = mongoose.connection;             
 
-var mongodbUri = 'mongodb://XXXX:35790/mongokywix?authSource=mongokywix&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000';
-mongoose.connect(mongodbUri);
- 
 conn.on('error', console.error.bind(console, 'connection error:'));  
  
 conn.once('open', function() {
@@ -47,3 +44,6 @@ conn.on('disconnected', function () {
     mongoose.connect(mongodbUri);
 });
 
+var mongodbUri = 'mongodb://jacopo:XXXX:35790/mongokywix?authSource=mongokywix&authMechanism=SCRAM-SHA-1&connectTimeoutMS=30000&socketTimeoutMS=30000';
+mongoose.connect(mongodbUri);
+ 

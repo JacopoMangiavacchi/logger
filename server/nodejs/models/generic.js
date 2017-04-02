@@ -2,7 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
  
 var genericSchema  = new Schema({
-    template:{ 
+    template: { 
         type: String, 
         required: true
     },
