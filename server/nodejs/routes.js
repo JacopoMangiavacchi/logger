@@ -58,7 +58,7 @@ router.route('/log/:template')
                     }
                     else {
                         console.log('Saved');
-                        res.json({ message: 'Log created successfully!' });
+                        res.json({ status: 1, message: 'Log created successfully!' });
                     }
                 });
             }
@@ -91,7 +91,7 @@ function saveGenericLog(template, body, res) {
         }
         else {
             console.log('Saved');
-            res.json({ message: 'Warning: Generic Log created successfully!' });
+            res.json({ status: 2, message: 'Warning: Generic Log created successfully!' });
         }
     });
 }
