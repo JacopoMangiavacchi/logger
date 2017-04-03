@@ -12,8 +12,16 @@ router.use(function timeLog(req, res, next) {
 });
 
 
-// Create a log (using POST at http://localhost:8080/log/simple)
+// Getlog templates - models - mongoose schemas supported
+router.route('/logs')
+    .get(function(req, res) {
+        res.json(["simple"]);
+ });
+
+
+// Get template schema or Create a log according to a schema (using POST at http://localhost:8080/log/simple)
 router.route('/log/:template')
+    // Get a template - model - mongoose schema json
     .get(function(req, res) {
         try {
             var schema = require(`./models/${req.params.template}`);
@@ -22,6 +30,7 @@ router.route('/log/:template')
             res.json({ message: 'No template found' });
         }
     })
+    // Create a log according to a schema (using POST at http://localhost:8080/log/simple)
     .post(function(req, res) {
         console.log(req.params.template)
         console.log(req.body) 
