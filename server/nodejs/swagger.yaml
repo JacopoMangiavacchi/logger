@@ -1,0 +1,58 @@
+# Thor Logger Swagger YAML documentation
+# 
+# Author: Jacopo Mangiavacchi
+
+swagger: '2.0'
+
+info:
+  version: "1.0.0"
+  title: Thor Logger
+
+paths:
+  /logs:
+    # This is a HTTP operation
+    get:
+      description: |
+        Get list of supported templates name.
+        Gets Array of String objects.
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: array
+            items:
+              title: templateName
+              type: string
+  /log/templateName:
+    get:
+      description: |
+        Get short Mongoose schema definition for the template
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: templateNameSchema
+            type: object
+    post:
+      description: |
+        Create a log passing in the Body as JSON object to be veirified with the templateName mongoose schema 
+      parameters:
+        - in: body
+          name: payload
+          description:  log payload passed a JSON object to be veirified with the templateName mongoose schema 
+          required: true
+          schema:
+            type: object
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Result
+            type: object
+            properties:
+              status:
+                type: number
+                description: 1 = OK, 2 = WARNING templateName not validated
+              message:
+                type: boolean
+
