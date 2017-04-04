@@ -1,11 +1,14 @@
 import XCTest
-@testable import swift
+@testable import Thor
 
-class swiftTests: XCTestCase {
+class ThorTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        XCTAssertEqual(swift().text, "Hello, World!")
+
+        Thor.sharedInstance.augmentedDictionary["key"] = "Test"
+
+        XCTAssertEqual((Thor.sharedInstance.augmentedDictionary["key"] as! String), "Test")
     }
 
 
